@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koreyscha-O‘zbekcha Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .quiz-container { max-width: 600px; margin: auto; }
+        .question { font-size: 20px; margin-bottom: 10px; }
+        .options button { display: block; width: 100%; margin: 5px 0; padding: 10px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Koreyscha-O‘zbekcha Quiz</h1>
+        <div id="quiz"></div>
+        <button onclick="nextQuestion()">Keyingi</button>
+        <p id="result"></p>
+    </div>
+    
+    <script>
+        const quizData = [
+            { question: "위치 (wichi) qanday ma’noni anglatadi?", options: ["Joylashuv", "Joylashtiruv", "Joylashtirilgan"], answer: "Joylashuv" },
+            { question: "공원 (gongwon) qanday ma’noni anglatadi?", options: ["Bog‘", "Daraxtzor", "Yashil maydon"], answer: "Bog‘" },
+            { question: "옆 (yeop) qanday ma’noni anglatadi?", options: ["Yoni", "Qarshisi", "Ichkari"], answer: "Yoni" },
+            { question: "층 (cheung) qanday ma’noni anglatadi?", options: ["Qavat", "Devor", "Shift"], answer: "Qavat" },
+            { question: "고맙다 (gomapda) qanday ma’noni anglatadi?", options: ["Rahmat", "Uzr", "Hayr"], answer: "Rahmat" },
+            { question: "실례하다 (sillyehada) qanday ma’noni anglatadi?", options: ["Qo‘pollik qilmoq", "Uzr so‘ramoq", "Hurmat ko‘rsatmoq"], answer: "Qo‘pollik qilmoq" },
+            { question: "근처 (geuncheo) qanday ma’noni anglatadi?", options: ["Atrofida", "Ichida", "Ortasida"], answer: "Atrofida" },
+            { question: "서점 (seojeom) qanday ma’noni anglatadi?", options: ["Kitob do‘koni", "Gazeta do‘koni", "Kafe"], answer: "Kitob do‘koni" },
+            { question: "여기 (yeogi) qanday ma’noni anglatadi?", options: ["Bu yer", "U yer", "Tashqarida"], answer: "Bu yer" },
+            { question: "거기 (geogi) qanday ma’noni anglatadi?", options: ["U yer", "Bu yer", "Ichkarida"], answer: "U yer" }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const quizContainer = document.getElementById("quiz");
+            quizContainer.innerHTML = `
+                <div class="question">${quizData[currentQuestion].question}</div>
+                <div class="options">
+                    ${quizData[currentQuestion].options.map(option => 
+                        `<button onclick="checkAnswer('${option}')">${option}</button>`).join('')}
+                </div>
+            `;
+        }
+
+        function checkAnswer(selected) {
+            if (selected === quizData[currentQuestion].answer) {
+                score++;
+            }
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                document.getElementById("quiz").innerHTML = '';
+                document.getElementById("result").innerText = `Sizning natijangiz: ${score} / ${quizData.length}`;
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
